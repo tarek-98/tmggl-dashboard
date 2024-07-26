@@ -1,0 +1,44 @@
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+  --color-orange: #F94E30;
+  --color-light-orange: #FF6433;
+  --color-light-gray: #F2F2F2;
+  --color-light: #F4F4F4;
+  --color-whitesmoke: #F5F5F5;
+  --color-dark: #212529;
+  --color-danger: #DC3545;
+  --color-gray: #ddd;
+  --font-family-manrope: 'Manrope', sans-serif;
+  --font-family-poppins: 'Poppins', sans-serif;
+  --transition-ease: all 300ms ease-in-out;
+}
+
+
+@media (max-width:599px) {
+  .vendor-main {
+    width: 80vw;
+  }
+}
+
+.vendor-main .add-btn {
+  background-color: blue;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.vendor-main .del-btn {
+  background-color: var(--color-danger);
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}

@@ -1,0 +1,53 @@
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+  --color-orange: #F94E30;
+  --color-light-orange: #FF6433;
+  --color-light-gray: #F2F2F2;
+  --color-light: #F4F4F4;
+  --color-whitesmoke: #F5F5F5;
+  --color-dark: #212529;
+  --color-danger: #DC3545;
+  --color-gray: #ddd;
+  --font-family-manrope: 'Manrope', sans-serif;
+  --font-family-poppins: 'Poppins', sans-serif;
+  --transition-ease: all 300ms ease-in-out;
+}
+
+.vendor-coupons {
+  /* background: rgb(255, 255, 255) !important; */
+  height: 100%;
+  overflow-y: scroll;
+  direction: rtl;
+}
+
+.vendor-coupons::-webkit-scrollbar {
+  display: none;
+}
+
+.vendor-coupons button {
+  transition: 0.3s !important;
+  -webkit-transition: 0.3s !important;
+  -moz-transition: 0.3s !important;
+  -ms-transition: 0.3s !important;
+  -o-transition: 0.3s !important;
+}
+
+.vendor-coupons button.del {
+  background-color: var(--color-danger) !important;
+}
+
+.vendor-coupons button.del:hover {
+  background-color: var(--color-orange) !important;
+}
+
+.vendor-coupons select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  flex: 1;
+  min-width: 180px;
+  margin-right: 10px;
+}

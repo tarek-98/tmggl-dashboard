@@ -1,0 +1,78 @@
+.add-admin-main {
+  /* background-color: #f8f9fa; */
+  /* Light background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-admin-main .container {
+  max-width: 600px;
+  /* Set max width for the form container */
+  margin: auto;
+}
+
+.admin-type {
+  margin-bottom: 20px;
+}
+
+.admin-type-admin,
+.admin-type-super {
+  margin-bottom: 10px;
+}
+
+.admin-type label {
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.form-check-input {
+  accent-color: #007bff;
+  /* Bootstrap primary color */
+}
+
+.form-check-label {
+  font-size: 16px;
+  margin-right: 5px;
+  /* color: #495057; */
+  /* Bootstrap secondary color */
+}
+
+.form-group label {
+  color: #495057;
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: 0.25rem;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.add-admin-main button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-admin-main button:hover {
+  background-color: #0056b3;
+}
+
+.del-btn {
+  background-color: var(--color-danger);
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}

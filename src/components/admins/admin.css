@@ -76,3 +76,9 @@
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
 }
+
+@media (max-width:599px) {
+  .admin-main {
+    width: 80vw;
+  }
+}

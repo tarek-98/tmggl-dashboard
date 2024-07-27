@@ -5,6 +5,8 @@ import "./admin.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  allAdmins,
+  allSuperAdmins,
   deleteAdmin,
   getAllAdmins,
   getAllSuperAdmins,
@@ -13,9 +15,10 @@ import Swal from "sweetalert2";
 
 function Admin() {
   const dispatch = useDispatch();
-  const { allAdmins, allSuperAdmins } = useSelector((state) => state.auth);
+  const admins = useSelector(allAdmins);
+  const superAdmins = useSelector(allSuperAdmins);
   const { status, admin } = useSelector((state) => state.auth);
-  const id = admin[`Super Admin ID`];
+  const id = admin && admin[`Super Admin ID`];
   // const id = `6686fc0af1610107d3a4fedd`;
 
   useEffect(() => {
@@ -23,11 +26,13 @@ function Admin() {
     dispatch(getAllSuperAdmins(id));
   }, []);
 
-  function handleDelete() {
-    dispatch(deleteAdmin());
+  function handleDelete(delId) {
+    dispatch(deleteAdmin({ id, delId }));
+    dispatch(getAllAdmins(id));
+    dispatch(getAllSuperAdmins(id));
   }
 
-  function handleAlert() {
+  function handleAlert(delId) {
     Swal.fire({
       title: "هل انت متأكد",
       icon: "warning",
@@ -38,7 +43,7 @@ function Admin() {
       cancelButtonText: "الغاء",
     }).then((result) => {
       if (result.isConfirmed) {
-        handleDelete();
+        handleDelete(delId);
       }
     });
   }
@@ -64,27 +69,32 @@ function Admin() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
+            <th>ID</th>
             <th>الايميل</th>
             <th>الحالة</th>
             <th>خيارات</th>
           </tr>
         </thead>
-        {/*  <tbody>
-          {allAdmins &&
-            allAdmins.map((admin) => {
+        <tbody>
+          {admins &&
+            admins.map((admin) => {
               return (
                 <tr>
-                  <td>1</td>
-                  <td>Mark</td>
+                  <td>{admin._id}</td>
+                  <td>{admin.Email}</td>
                   <td>ادارة</td>
                   <td className="d-flex gap-3 del">
-                    <span onClick={() => handleAlert()}>حذف</span>
+                    <span
+                      onClick={() => handleAlert(admin._id)}
+                      className="del-btn"
+                    >
+                      حذف
+                    </span>
                   </td>
                 </tr>
               );
             })}
-        </tbody> */}
+        </tbody>
       </Table>
       <hr />
       <div className="title">
@@ -99,21 +109,26 @@ function Admin() {
             <th>خيارات</th>
           </tr>
         </thead>
-        {/*  <tbody>
-          {allSuperAdmins &&
-            allSuperAdmins.map((admin) => {
+        <tbody>
+          {superAdmins &&
+            superAdmins.map((admin) => {
               return (
                 <tr>
-                  <td>1</td>
-                  <td>Mark</td>
-                  <td>ادارة</td>
+                  <td>{admin._id}</td>
+                  <td>{admin.Email}</td>
+                  <td>ادارة عليا</td>
                   <td className="d-flex gap-3 del">
-                    <span onClick={() => handleAlert()} className="del-btn">حذف</span>
+                    <span
+                      onClick={() => handleAlert(admin._id)}
+                      className="del-btn"
+                    >
+                      حذف
+                    </span>
                   </td>
                 </tr>
               );
             })}
-        </tbody> */}
+        </tbody>
       </Table>
     </div>
   );

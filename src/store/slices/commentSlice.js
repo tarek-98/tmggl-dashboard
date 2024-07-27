@@ -4,13 +4,6 @@ import axios from "axios";
 
 const API_URL = "https://tager.onrender.com";
 
-export const fetchComments = createAsyncThunk(
-  "comments/fetchComments",
-  async () => {
-    const response = await axios.get(`http://localhost:9000/comments`);
-    return response.data;
-  }
-);
 export const addComment = createAsyncThunk(
   "comments/addComment",
   async ({ productId, client, comment }) => {
@@ -76,17 +69,6 @@ const commentsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchComments.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchComments.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.comments = action.payload;
-      })
-      .addCase(fetchComments.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
       .addCase(addComment.fulfilled, (state, action) => {
         state.status = "comment Added";
       })

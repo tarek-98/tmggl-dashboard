@@ -191,7 +191,7 @@ function NewVendorRequest() {
                             align="right"
                             className="d-flex gap-2 justify-content-end align-items-center"
                           >
-                            <span className="add-btn">اضافة</span>
+                            <span className="add-btn">موافقة</span>
                             <span className="del-btn">حذف</span>
                           </TableCell>
                         </TableRow>

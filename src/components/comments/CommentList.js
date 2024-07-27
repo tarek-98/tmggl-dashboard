@@ -154,9 +154,9 @@ const Comments = ({ product }) => {
   return (
     <div className="comment-section">
       <form>
-        {/*<div className="comment-form">
+        <div className="comment-form">
           <AddComment product={product} />
-        </div> */}
+        </div>
         <ul className="comment-list">{content}</ul>
       </form>
     </div>

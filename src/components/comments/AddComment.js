@@ -5,9 +5,9 @@ import { addComment } from "../../store/slices/commentSlice";
 const AddComment = ({ product }) => {
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
-  const { userInfo, isAuthenticated } = useSelector((state) => state.auth);
-  const userData = userInfo ? userInfo[`Client data`][0] : null;
-  const client = userData ? userData._id : null;
+  const { userInfo, isLoggedIn } = useSelector((state) => state.auth);
+  const { status, admin } = useSelector((state) => state.auth);
+  const client = admin && admin[`Super Admin ID`];
   const productId = product._id;
 
   const onContentChanged = (e) => setComment(e.target.value);
@@ -33,7 +33,7 @@ const AddComment = ({ product }) => {
         type="button"
         onClick={onSaveCommentClicked}
         className="comment-button"
-        disabled={!isAuthenticated || comment === ""}
+        disabled={!isLoggedIn || comment === ""}
       >
         اضف
       </button>

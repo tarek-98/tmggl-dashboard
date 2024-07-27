@@ -131,10 +131,10 @@ export const getAllSuperAdmins = createAsyncThunk(
 
 export const deleteAdmin = createAsyncThunk(
   "auth/deleteAdmin",
-  async ({ rejectWithValue }) => {
+  async ({ id, delId }, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `${API_URL}/admin/admin/666fd3459c2125e4d2bb34d9/667124c552f0d1d8c7e7a591`,
+        `${API_URL}/admin/admin/${delId}/${id}`,
         {
           headers: {
             Authorization: `${Authorization}`,
@@ -241,5 +241,7 @@ export const authSlice = createSlice({
 });
 
 export const { setIsLoggedIn } = authSlice.actions;
+export const allAdmins = (state) => state.auth.allAdmins;
+export const allSuperAdmins = (state) => state.auth.allSuperAdmins;
 
 export default authSlice.reducer;

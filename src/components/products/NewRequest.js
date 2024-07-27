@@ -35,7 +35,6 @@ function NewRequest() {
     price: "",
     status: "",
   });
-  const id = `6686fc0af1610107d3a4fedd`;
 
   useEffect(() => {
     dispatch(getRequestProducts());
@@ -168,7 +167,7 @@ function NewRequest() {
                             </Link>
                           </TableCell>
                           <TableCell align="right" className="">
-                            <span className="ms-3 add-btn">اضافة</span>
+                            <span className="ms-3 add-btn">موافقة</span>
                             <span className="del-btn">حذف</span>
                           </TableCell>
                         </TableRow>

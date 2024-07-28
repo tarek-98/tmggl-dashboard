@@ -136,6 +136,7 @@ function VendorsEdit() {
                     <TableRow>
                       <TableCell align="right">اسم التاجر</TableCell>
                       <TableCell align="right">اسم المتجر</TableCell>
+                      <TableCell align="right">مقر التاجر</TableCell>
                       <TableCell align="right">الايميل</TableCell>
                       <TableCell align="right">رقم الجوال</TableCell>
                       <TableCell align="right">نوع الرخصة</TableCell>
@@ -154,6 +155,9 @@ function VendorsEdit() {
                             {row.vendorName}
                           </TableCell>
                           <TableCell align="right">{row.brandName}</TableCell>
+                          <TableCell align="right">
+                            {row.vendorLocation}
+                          </TableCell>
                           <TableCell align="right">{row.vendorEmail}</TableCell>
                           <TableCell align="right">{row.vendorPhone}</TableCell>
                           <TableCell align="right">

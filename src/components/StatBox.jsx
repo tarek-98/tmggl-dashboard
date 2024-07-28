@@ -23,7 +23,12 @@ const StatBox = ({ title, subtitle, icon, linkText, link }) => {
   return (
     <Box width="100%" m="0 30px">
       <Box display="flex" justifyContent="space-between">
-        <Box>
+        <Box
+          display="flex"
+          justifyContent="center"
+          flexDirection="column"
+          alignItems="center"
+        >
           {icon}
           <Typography
             variant="h4"

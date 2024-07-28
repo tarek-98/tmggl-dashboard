@@ -77,7 +77,7 @@ function Admin() {
           </Link>
         </div>
         <div className="title">
-          <h3>ادمن</h3>
+          <h3>ادارة</h3>
         </div>
         {status === "loading" ? (
           <Fragment>

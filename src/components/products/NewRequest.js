@@ -4,6 +4,7 @@ import {
   fetchAsyncProductSingle,
   getAllRequestedProducts,
   getRequestProducts,
+  updateStatus,
 } from "../../store/slices/productsSlice";
 import {
   Table,
@@ -67,6 +68,15 @@ function NewRequest() {
   useEffect(() => {
     document.title = "طلبات اضافة منتج";
   }, []);
+
+  const vendorEmail = "tsalah240@gmail.com";
+  const newStatus = "Accepted";
+
+  function acceptedProduct(productId) {
+    dispatch(updateStatus({ vendorEmail, productId, newStatus }));
+    dispatch(getRequestProducts());
+    console.log({ vendorEmail, productId, newStatus });
+  }
 
   return (
     <div className="product-main">
@@ -167,7 +177,12 @@ function NewRequest() {
                             </Link>
                           </TableCell>
                           <TableCell align="right" className="">
-                            <span className="ms-3 add-btn">موافقة</span>
+                            <span
+                              className="ms-3 add-btn"
+                              onClick={() => acceptedProduct(row._id)}
+                            >
+                              موافقة
+                            </span>
                             <span className="del-btn">حذف</span>
                           </TableCell>
                         </TableRow>

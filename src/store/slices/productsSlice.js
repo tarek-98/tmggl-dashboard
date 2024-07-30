@@ -1,19 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "https://tager.onrender.com";
+const API_URL = "https://tager-dpsl.onrender.com";
 const Authorization = localStorage.getItem("token");
 
 export const getProducts = createAsyncThunk("products/fetch", async () => {
-  const response = await axios.get(`${API_URL}/products/getall`, {
-    headers: {
-      authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiV2VkIE1heSAyMiAyMDI0IDE5OjM5OjI5IEdNVCswMzAwICjYqtmI2YLZitiqINi02LHZgiDYo9mI2LHZiNio2Kcg2KfZhNi12YrZgdmKKSIsInVzZXJJZCI6IjY2NGEzNTQ2Njk4NTVkNmM3OGJhZjEyNiIsImlhdCI6MTcxNjM5NTk2OX0.MgCtXcPKZQwFHNmZ_eesNTi4oqDxCg4-kulBDIY8kXA`,
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await axios.get(`${API_URL}/products/getall`);
   console.log(response.data);
   return response.data;
 });
+
 export const getRequestProducts = createAsyncThunk(
   "requestProducts/fetch",
   async () => {
@@ -24,6 +20,17 @@ export const getRequestProducts = createAsyncThunk(
       // },
     });
     console.log(response.data);
+    return response.data;
+  }
+);
+
+export const updateStatus = createAsyncThunk(
+  "updateStatus/fetch",
+  async ({ vendorEmail, productId, newStatus }) => {
+    const response = await axios.patch(
+      `${API_URL}/products/editstatus/${vendorEmail}`,
+      { productId, newStatus }
+    );
     return response.data;
   }
 );
@@ -48,6 +55,7 @@ const productsSlice = createSlice({
     requestProducts: [],
     productSingle: [],
     productSingleStatus: "idle",
+    statusUpdate: "idle",
     loading: false,
   },
   extraReducers: (builder) => {
@@ -84,6 +92,18 @@ const productsSlice = createSlice({
 
       .addCase(fetchAsyncProductSingle.rejected, (state, action) => {
         state.productSingleStatus = "failed";
+      })
+
+      .addCase(updateStatus.pending, (state, action) => {
+        state.statusUpdate = "loading";
+      })
+
+      .addCase(updateStatus.fulfilled, (state, action) => {
+        state.statusUpdate = "succeeded";
+      })
+
+      .addCase(updateStatus.rejected, (state, action) => {
+        state.statusUpdate = "failed";
       });
   },
 });

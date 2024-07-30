@@ -15,9 +15,8 @@ const Comments = ({ product }) => {
   const [visibleReplies, setVisibleReplies] = useState({});
   const comments = product.comments;
 
-  const { userInfo } = useSelector((state) => state.auth);
-  const userData = userInfo ? userInfo[`Client data`][0] : null;
-  const user = userData ? userData._id : null;
+  const { status, admin } = useSelector((state) => state.auth);
+  const user = admin[`Super Admin ID`];
 
   useEffect(() => {
     console.log(comments);
@@ -35,7 +34,12 @@ const Comments = ({ product }) => {
       <Fragment>
         <div className="d-flex align-items-center gap-2">
           <FaUser className="fs-4 text-dark" />
-          <span className="text-black-50 text-dark">userName</span>
+          <span className="text-black-50">
+            userName
+            {product.idVendor === comment.client && (
+              <span className="text-danger me-2">التاجر</span>
+            )}
+          </span>
         </div>
         <div className="comment-text mb-0 text-dark">{comment.comment}</div>
         <div>
@@ -84,10 +88,17 @@ const Comments = ({ product }) => {
               {comment.replies.map((reply) => (
                 <div key={reply._id} style={{ marginRight: "25px" }}>
                   <div className="d-flex align-items-center gap-2">
-                    <FaUser className="fs-4" />
-                    <span className="text-black-50">userName</span>
+                    <FaUser className="fs-4 text-dark" />
+                    <span className="text-black-50">
+                      userName
+                      {product.idVendor === comment.client && (
+                        <span className="text-danger me-2">التاجر</span>
+                      )}
+                    </span>
                   </div>
-                  <div className="comment-text mb-0">{reply.reply}</div>
+                  <div className="comment-text mb-0 text-dark">
+                    {reply.reply}
+                  </div>
                   <div>
                     <span className="comment-date me-4">
                       {new Date(reply.createdAt).toLocaleString()}

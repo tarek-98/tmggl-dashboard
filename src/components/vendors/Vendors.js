@@ -1,6 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllVendors, getVendors } from "../../store/slices/vendorsSlice";
+import {
+  delVendor,
+  getAllVendors,
+  getVendors,
+} from "../../store/slices/vendorsSlice";
 import {
   Table,
   TableBody,
@@ -16,6 +20,8 @@ import { Grid } from "@mui/material";
 import "./vendor.css";
 import "../ordersList.css";
 import { Col, Row } from "react-bootstrap";
+import Swal from "sweetalert2";
+import { toast, ToastContainer } from "react-toastify";
 
 const Vendors = () => {
   const dispatch = useDispatch();
@@ -38,7 +44,7 @@ const Vendors = () => {
   });
 
   useEffect(() => {
-    dispatch(getVendors(id));
+    dispatch(getVendors());
     console.log(vendors);
     console.log(id);
   }, []);
@@ -72,6 +78,29 @@ const Vendors = () => {
   useEffect(() => {
     document.title = "التجار";
   }, []);
+
+  function sweetAlertDel(vendorId) {
+    Swal.fire({
+      title: "هل انت متأكد؟",
+      text: "هل تريد حذف التاجر",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "نعم حذف",
+      cancelButtonText: "الغاء",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        toast.success("تم حذف التاجر", {
+          position: "top-left",
+        });
+        dispatch(delVendor(vendorId));
+        setTimeout(() => {
+          dispatch(getVendors());
+        }, 1000);
+      }
+    });
+  }
 
   return (
     <div className="vendor-main">
@@ -151,7 +180,7 @@ const Vendors = () => {
                   <TableBody>
                     {vendors &&
                       filteredVendors.map((row) => (
-                        <TableRow key={row.id}>
+                        <TableRow key={row._id}>
                           <TableCell component="th" scope="row" align="right">
                             {row.vendorName}
                           </TableCell>
@@ -188,8 +217,17 @@ const Vendors = () => {
                               Download File
                             </a>
                           </TableCell>
-                          <TableCell align="right">
-                            <span className="del-btn">حذف</span>
+                          <TableCell
+                            align="right"
+                            className="d-flex gap-2 justify-content-end align-items-center"
+                          >
+                            <span
+                              className="del-btn"
+                              onClick={() => sweetAlertDel(row._id)}
+                            >
+                              حذف
+                            </span>
+                            <span className="add-btn">تعديل</span>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -200,6 +238,7 @@ const Vendors = () => {
           </Grid>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

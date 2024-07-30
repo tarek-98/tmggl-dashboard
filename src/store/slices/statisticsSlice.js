@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "https://tager.onrender.com";
+const API_URL = "https://tager-dpsl.onrender.com";
 const Authorization = localStorage.getItem("token");
 
 export const getOrdersNumber = createAsyncThunk(
@@ -31,7 +31,7 @@ export const getUsersNumber = createAsyncThunk(
     const response = await axios.get(`${API_URL}/admin/clients-num/${id}`, {
       headers: {
         Authorization: `${Authorization}`,
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
       },
     });
     return response.data;

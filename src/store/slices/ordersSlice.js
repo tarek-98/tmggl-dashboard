@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchOrders } from "../../api/api";
 
-const API_URL = "https://tager.onrender.com";
+const API_URL = "https://tager-dpsl.onrender.com";
 
 export const getOrders = createAsyncThunk("orders/getOrders", async () => {
   const response = await fetchOrders();

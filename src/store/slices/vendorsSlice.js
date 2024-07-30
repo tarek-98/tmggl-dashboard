@@ -1,16 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "https://tager.onrender.com";
+const API_URL = "https://tager-dpsl.onrender.com";
 const Authorization = localStorage.getItem("token");
 
-export const getVendors = createAsyncThunk("users/getVendors", async (id) => {
-  const response = await axios.get(`${API_URL}/admin/all-vendors/${id}`, {
-    headers: {
-      Authorization: `${Authorization}`,
-      // "Content-Type": "application/json",
-    },
-  });
+export const getVendors = createAsyncThunk("users/getVendors", async () => {
+  const response = await axios.get(`${API_URL}/admin/all-vendors`);
   console.log(response.data);
   return response.data;
 });
@@ -48,6 +43,17 @@ export const getEditVendors = createAsyncThunk(
     return response.data;
   }
 );
+
+export const delVendor = createAsyncThunk("users/delVendor", async (id) => {
+  const response = await axios.get(`${API_URL}/vendor/vendor/${id}`, {
+    headers: {
+      Authorization: `${Authorization}`,
+      // "Content-Type": "application/json",
+    },
+  });
+  console.log(response.data);
+  return response.data;
+});
 
 const vendorsSlice = createSlice({
   name: "vendors",
@@ -90,6 +96,17 @@ const vendorsSlice = createSlice({
         state.status = "sucessed";
       })
       .addCase(getEditVendors.rejected, (state) => {
+        state.status = "failed";
+        state.error = "failed";
+      })
+
+      .addCase(delVendor.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(delVendor.fulfilled, (state, action) => {
+        state.status = "vendor deleted";
+      })
+      .addCase(delVendor.rejected, (state) => {
         state.status = "failed";
         state.error = "failed";
       });

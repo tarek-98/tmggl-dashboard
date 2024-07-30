@@ -38,7 +38,8 @@ const Dashboard = () => {
   const vendorsNumber = useSelector(getAllVendors);
   const usersNumber = useSelector(getAllClients);
 
-  const id = `6686fc0af1610107d3a4fedd`;
+  const { status, admin } = useSelector((state) => state.auth);
+  const id = admin && admin[`Super Admin ID`];
 
   useEffect(() => {
     dispatch(getOrdersNumber());

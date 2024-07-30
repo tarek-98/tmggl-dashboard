@@ -13,6 +13,8 @@ const EditComment = ({ comment, setEditMode, product }) => {
   const onSaveCommentClicked = () => {
     if (newCommentText) {
       dispatch(editComment({ productId, commentId, newCommentText }));
+      setNewCommentText("");
+      setEditMode(false);
     }
   };
 

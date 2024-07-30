@@ -1,6 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllClients, getUsers } from "../store/slices/usersSlice";
+import {
+  deleteUser,
+  getAllClients,
+  getUsers,
+} from "../store/slices/usersSlice";
 import {
   Table,
   TableBody,
@@ -14,6 +18,8 @@ import {
 } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Col, Row } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -67,6 +73,29 @@ const Users = () => {
       [name]: value,
     }));
   };
+
+  function sweetAlertDel(userId) {
+    Swal.fire({
+      title: "هل انت متأكد؟",
+      text: "هل تريد حذف العميل",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "نعم حذف",
+      cancelButtonText: "الغاء",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        toast.success("تم حذف العميل", {
+          position: "top-left",
+        });
+        dispatch(deleteUser(userId));
+        setTimeout(() => {
+          dispatch(getUsers(id));
+        }, 1000);
+      }
+    });
+  }
 
   return (
     <div className="vendor-main">
@@ -155,8 +184,17 @@ const Users = () => {
                           </TableCell>
                           <TableCell align="right">{row.PhoneNumber}</TableCell>
                           <TableCell align="right">{row.Email}</TableCell>
-                          <TableCell align="right">
-                            <span className="del-btn">حذف</span>
+                          <TableCell
+                            align="right"
+                            className="d-flex gap-2 justify-content-end align-items-center"
+                          >
+                            <span
+                              className="del-btn"
+                              onClick={() => sweetAlertDel(row._id)}
+                            >
+                              حذف
+                            </span>
+                            <span className="add-btn">تعديل</span>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -167,6 +205,7 @@ const Users = () => {
           </Grid>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

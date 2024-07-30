@@ -15,6 +15,10 @@ import Comments from "../comments/CommentList";
 import vid from "../../videos/Download.mp4";
 import BottomOption from "../bottomOption/BottomOption";
 import "../bottomOption/addProduct.css";
+import Slider from "../control/slider/Slider";
+import ControlPanel from "../control/controls/ControlPanel";
+import { CiVolumeMute } from "react-icons/ci";
+import { AiOutlineSound } from "react-icons/ai";
 
 function ProductSingle() {
   const { id } = useParams();
@@ -66,6 +70,34 @@ function ProductSingle() {
   //handle size
   const [toggleState, setToggleState] = useState(null);
 
+  /*control*/
+  const [percentage, setPercentage] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+
+  const handleSliderChange = (e) => {
+    const newPercentage = e.target.value;
+    setPercentage(newPercentage);
+
+    if (videoRef.current) {
+      const newTime = (videoRef.current.duration / 100) * newPercentage;
+      videoRef.current.currentTime = newTime;
+
+      console.log(`Slider Value: ${newPercentage}, New Time: ${newTime}`);
+    }
+  };
+
+  const getCurrDuration = (e) => {
+    const current = e.target.currentTime;
+    const duration = e.target.duration;
+    if (duration > 0) {
+      const percent = ((current / duration) * 100).toFixed(2);
+      setPercentage(+percent);
+      setCurrentTime(current.toFixed(2));
+    }
+  };
+  /* */
+
   return (
     <div className="single-product video-card">
       <div className="video-slide-container">
@@ -73,16 +105,39 @@ function ProductSingle() {
           <div>
             <video
               id={id}
-              // src={vid}
               src={product && product.video}
               className="react-player"
-              autoPlay
+              autoPlay={true}
               muted={sound}
               loop
               playsInline={true}
               ref={videoRef}
+              onTimeUpdate={getCurrDuration}
+              onLoadedData={(e) => {
+                setDuration(e.target.duration.toFixed(2));
+              }}
               onClick={togglePlay}
             ></video>
+            <div className="controls">
+              <Slider
+                percentage={percentage}
+                onChange={(e) => handleSliderChange(e)}
+              />
+              <ControlPanel duration={duration} currentTime={currentTime} />
+              <div className="sound-icon ms-1">
+                {sound ? (
+                  <CiVolumeMute
+                    className="fs-4"
+                    onClick={() => setSound(false)}
+                  />
+                ) : (
+                  <AiOutlineSound
+                    className="fs-4"
+                    onClick={() => setSound(true)}
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </div>
         <SlideOverlay
@@ -95,16 +150,6 @@ function ProductSingle() {
           setInfo={setInfo}
         />
         <BottomOption setAddProduct={setAddProduct} product={product} />
-      </div>
-      <div
-        className={volume ? "volume-hide" : "volume"}
-        onClick={() => {
-          setSound(!sound);
-          setVolume(!volume);
-        }}
-      >
-        <FaVolumeXmark className="text-dark" />
-        <span className="me-2">Unmute</span>
       </div>
 
       {product && (

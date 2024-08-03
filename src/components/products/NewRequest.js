@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  delProduct,
   fetchAsyncProductSingle,
   getAllRequestedProducts,
   getRequestProducts,
@@ -22,6 +23,8 @@ import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { MdOutlineSlideshow } from "react-icons/md";
 import { Col, Row } from "react-bootstrap";
+import Swal from "sweetalert2";
+import { toast, ToastContainer } from "react-toastify";
 
 function NewRequest() {
   const dispatch = useDispatch();
@@ -76,6 +79,29 @@ function NewRequest() {
     dispatch(updateStatus({ vendorEmail, productId, newStatus }));
     dispatch(getRequestProducts());
     console.log({ vendorEmail, productId, newStatus });
+  }
+
+  function sweetAlertDel(productId) {
+    Swal.fire({
+      title: "هل انت متأكد؟",
+      text: "هل تريد حذف المنتج",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "نعم حذف",
+      cancelButtonText: "الغاء",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        toast.success("تم حذف المنتج", {
+          position: "top-left",
+        });
+        dispatch(delProduct(productId));
+        setTimeout(() => {
+          dispatch(getRequestProducts());
+        }, 1000);
+      }
+    });
   }
 
   return (
@@ -183,7 +209,12 @@ function NewRequest() {
                             >
                               موافقة
                             </span>
-                            <span className="del-btn">حذف</span>
+                            <span
+                              className="del-btn"
+                              onClick={() => sweetAlertDel(row._id)}
+                            >
+                              حذف
+                            </span>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -194,6 +225,7 @@ function NewRequest() {
           </Grid>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 }

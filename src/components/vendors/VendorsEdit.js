@@ -27,7 +27,6 @@ function VendorsEdit() {
   );
   const data = useSelector(getAllEditedVendors);
   const { admin } = useSelector((state) => state.auth);
-  // const id = `6686fc0af1610107d3a4fedd`;
   const id = admin[`Super Admin ID`];
   const [filteredVendors, setFilteredVendors] = useState([]);
   const [filters, setFilters] = useState({
@@ -48,12 +47,14 @@ function VendorsEdit() {
         (vendor) =>
           vendor.vendorName
             .toLowerCase()
-            .includes(filters.vendorName.toLowerCase()) &&
-          (filters.price === "" ||
-            vendor.vendorPhone.toString().includes(filters.vendorPhone)) &&
+            .includes(filters && filters.vendorName.toLowerCase()) &&
+          ((filters && filters.price === "") ||
+            vendor.vendorPhone
+              .toString()
+              .includes(filters && filters.vendorPhone)) &&
           vendor.brandName
             .toLowerCase()
-            .includes(filters.brandName.toLowerCase())
+            .includes(filters && filters.brandName.toLowerCase())
       );
     setFilteredVendors(filtered);
   }, [filters, data]);

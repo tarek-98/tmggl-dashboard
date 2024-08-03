@@ -45,7 +45,7 @@ export const getEditVendors = createAsyncThunk(
 );
 
 export const delVendor = createAsyncThunk("users/delVendor", async (id) => {
-  const response = await axios.get(`${API_URL}/vendor/vendor/${id}`, {
+  const response = await axios.delete(`${API_URL}/vendor/vendor/${id}`, {
     headers: {
       Authorization: `${Authorization}`,
       // "Content-Type": "application/json",

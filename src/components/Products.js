@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  delProduct,
   fetchAsyncProductSingle,
   getAllProducts,
   getProducts,
@@ -22,6 +23,8 @@ import { MdOutlineSlideshow } from "react-icons/md";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
+import Swal from "sweetalert2";
+import { toast, ToastContainer } from "react-toastify";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -61,6 +64,29 @@ const Products = () => {
   };
 
   /* */
+
+  function sweetAlertDel(productId) {
+    Swal.fire({
+      title: "هل انت متأكد؟",
+      text: "هل تريد حذف المنتج",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "نعم حذف",
+      cancelButtonText: "الغاء",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        toast.success("تم حذف المنتج", {
+          position: "top-left",
+        });
+        dispatch(delProduct(productId));
+        setTimeout(() => {
+          dispatch(getProducts());
+        }, 1000);
+      }
+    });
+  }
 
   return (
     <div className="product-main">
@@ -162,7 +188,12 @@ const Products = () => {
                             </Link>
                           </TableCell>
                           <TableCell align="right">
-                            <span className="del-btn">حذف</span>
+                            <span
+                              className="del-btn"
+                              onClick={() => sweetAlertDel(row._id)}
+                            >
+                              حذف
+                            </span>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -173,6 +204,7 @@ const Products = () => {
           </Grid>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

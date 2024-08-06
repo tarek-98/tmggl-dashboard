@@ -21,6 +21,8 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import InfoIcon from "@mui/icons-material/Info";
 import { right } from "@popperjs/core";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import PaymentIcon from "@mui/icons-material/Payment";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -199,6 +201,30 @@ const Sidebar = () => {
               title="ارسال ميل"
               to="/sendmail"
               icon={<SendIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+              textAlign={right}
+              paddingRight={5}
+            >
+              خدمات الشحن و الدفع
+            </Typography>
+            <Item
+              title="خدمات الشحن و التوصيل"
+              to="/shipping"
+              icon={<LocalShippingIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="خدمات تابي و تمارا"
+              to="/payments"
+              icon={<PaymentIcon />}
               selected={selected}
               setSelected={setSelected}
             />

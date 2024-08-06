@@ -9,6 +9,8 @@ import couponsSlice from "./slices/couponsSlice";
 import mapReducer from "./slices/mapSlice";
 import sendMailReducer from "./slices/sendMail";
 import commentsSlice from "./slices/commentSlice";
+import shippingReducer from "./slices/shippingSlice";
+import tabbySlice from "./slices/tabbySlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,5 +24,7 @@ export const store = configureStore({
     map: mapReducer,
     sendMail: sendMailReducer,
     comments: commentsSlice,
+    shipping: shippingReducer,
+    payments: tabbySlice,
   },
 });

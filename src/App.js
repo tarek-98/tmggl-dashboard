@@ -15,8 +15,6 @@ import CouponPage from "./components/coupon/CouponPage";
 import Admin from "./components/admins/Admin";
 import NewVendorRequest from "./components/vendors/NewVendorRequest";
 import VendorsEdit from "./components/vendors/VendorsEdit";
-import ShippingMethod from "./components/shipping/ShippingMethod";
-import Tabby from "./components/shipping/Tabby";
 import AddAdmin from "./components/admins/AddAdmin";
 import NewRequest from "./components/products/NewRequest";
 import EmailForm from "./components/sendMail/EmailForm";
@@ -25,6 +23,8 @@ import Products from "./components/Products";
 import Users from "./components/Users";
 import Vendors from "./components/vendors/Vendors";
 import Orders from "./components/Orders";
+import Shipping from "./components/shipping/Shipping";
+import Tabby from "./components/tabby/Tabby";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -65,6 +65,8 @@ function App() {
               <Route path="/admins" element={<Admin />} />
               <Route path="/admins/addAdmin" element={<AddAdmin />} />
               <Route path="/vendors" element={<Vendors />} />
+              <Route path="/shipping" element={<Shipping />} />
+              <Route path="/payments" element={<Tabby />} />
               <Route
                 path="/vendors/newRequest"
                 element={<NewVendorRequest />}
@@ -73,8 +75,6 @@ function App() {
               <Route path="/orders" element={<Orders />} />
               <Route path="/coupons" element={<CouponPage />} />
               <Route path="/sendmail" element={<EmailForm />} />
-              <Route path="/shippingMethod" element={<ShippingMethod />} />
-              <Route path="/tabby" element={<Tabby />} />
             </Routes>
           </main>
         </div>

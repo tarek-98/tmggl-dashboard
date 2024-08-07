@@ -37,27 +37,28 @@ function VendorsEdit() {
 
   useEffect(() => {
     dispatch(getEditVendors(id));
+    console.log(data && data);
   }, []);
 
   /*filter */
-  useEffect(() => {
-    const filtered =
-      data &&
-      data.filter(
-        (vendor) =>
-          vendor.vendorName
-            .toLowerCase()
-            .includes(filters && filters.vendorName.toLowerCase()) &&
-          ((filters && filters.price === "") ||
-            vendor.vendorPhone
-              .toString()
-              .includes(filters && filters.vendorPhone)) &&
-          vendor.brandName
-            .toLowerCase()
-            .includes(filters && filters.brandName.toLowerCase())
-      );
-    setFilteredVendors(filtered);
-  }, [filters, data]);
+  // useEffect(() => {
+  //   const filtered =
+  //     data &&
+  //     data.filter(
+  //       (vendor) =>
+  //         vendor.vendorName
+  //           .toLowerCase()
+  //           .includes(filters && filters.vendorName.toLowerCase()) &&
+  //         ((filters && filters.price === "") ||
+  //           vendor.vendorPhone
+  //             .toString()
+  //             .includes(filters && filters.vendorPhone)) &&
+  //         vendor.brandName
+  //           .toLowerCase()
+  //           .includes(filters && filters.brandName.toLowerCase())
+  //     );
+  //   setFilteredVendors(filtered);
+  // }, [filters, data]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -148,7 +149,7 @@ function VendorsEdit() {
                       <TableCell align="right">خيارات</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
+                  {/*  <TableBody>
                     {data &&
                       filteredVendors.map((row) => (
                         <TableRow key={row.id}>
@@ -197,7 +198,7 @@ function VendorsEdit() {
                           </TableCell>
                         </TableRow>
                       ))}
-                  </TableBody>
+                  </TableBody> */}
                 </Table>
               </TableContainer>
             </Grid>

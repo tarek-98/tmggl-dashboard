@@ -240,21 +240,21 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="تقارير المبيعات"
-              to="/coupons"
+              to="/"
               icon={<DiscountIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="تقارير المنتجات"
-              to="/coupons"
+              to="/"
               icon={<CardGiftcardIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="تقارير العملاء"
-              to="/sendmail"
+              to="/"
               icon={<SendIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -271,21 +271,21 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="سياسة الخصوصية"
-              to="/form"
+              to="/"
               icon={<PrivacyTipIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="سياسة الشحن و الاسترجاع"
-              to="/form"
+              to="/"
               icon={<KeyboardReturnIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="عن تمقل"
-              to="/form"
+              to="/"
               icon={<InfoIcon />}
               selected={selected}
               setSelected={setSelected}

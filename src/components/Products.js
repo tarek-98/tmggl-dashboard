@@ -154,6 +154,7 @@ const Products = () => {
                       <TableCell align="right">ID</TableCell>
                       <TableCell align="right">اسم المنتج</TableCell>
                       <TableCell align="right">السعر</TableCell>
+                      <TableCell align="right">المخزون</TableCell>
                       <TableCell align="right">الحالة</TableCell>
                       <TableCell align="right">مشاهدة</TableCell>
                       <TableCell align="right">خيارات</TableCell>
@@ -168,7 +169,10 @@ const Products = () => {
                           </TableCell>
                           <TableCell align="right">{row.name}</TableCell>
                           <TableCell align="right">{row.price}</TableCell>
-                          <TableCell align="right">{row.status}</TableCell>
+                          <TableCell align="right">{row.totalRating}</TableCell>
+                          <TableCell align="right">
+                            {row.status === "Accepted" && <span>متاح</span>}
+                          </TableCell>
                           <TableCell
                             align="right"
                             onClick={() =>

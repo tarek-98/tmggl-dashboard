@@ -1,8 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  delVendor,
   getAllRequestedVendors,
   getRequestVendors,
+  getVendors,
 } from "../../store/slices/vendorsSlice";
 import {
   Table,
@@ -18,6 +20,8 @@ import {
 import { Grid } from "@mui/material";
 import "./vendor.css";
 import { Col, Row } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
+import Swal from "sweetalert2";
 
 function NewVendorRequest() {
   const dispatch = useDispatch();
@@ -73,6 +77,29 @@ function NewVendorRequest() {
   useEffect(() => {
     document.title = "طلبات اضافة تاجر";
   }, []);
+
+  function sweetAlertDel(vendorId) {
+    Swal.fire({
+      title: "هل انت متأكد؟",
+      text: "هل تريد حذف التاجر",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "نعم حذف",
+      cancelButtonText: "الغاء",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        toast.success("تم حذف التاجر", {
+          position: "top-left",
+        });
+        dispatch(delVendor(vendorId));
+        setTimeout(() => {
+          dispatch(getVendors());
+        }, 1000);
+      }
+    });
+  }
 
   return (
     <div className="vendor-main">
@@ -196,7 +223,12 @@ function NewVendorRequest() {
                             className="d-flex gap-2 justify-content-end align-items-center"
                           >
                             <span className="add-btn">موافقة</span>
-                            <span className="del-btn">حذف</span>
+                            <span
+                              className="del-btn"
+                              onClick={() => sweetAlertDel(row._id)}
+                            >
+                              حذف
+                            </span>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -207,6 +239,7 @@ function NewVendorRequest() {
           </Grid>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 }

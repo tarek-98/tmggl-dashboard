@@ -25,6 +25,8 @@ import { Link } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
+import VendorChatInfo from "./products/VendorChatInfo";
+import VendorLocation from "./products/VendorLocation";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -151,8 +153,10 @@ const Products = () => {
                 <Table aria-label="responsive table">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="right">ID</TableCell>
+                      {/*  <TableCell align="right">ID</TableCell> */}
                       <TableCell align="right">اسم المنتج</TableCell>
+                      <TableCell align="right">اسم التاجر</TableCell>
+                      <TableCell align="right">مقر التاجر</TableCell>
                       <TableCell align="right">السعر</TableCell>
                       <TableCell align="right">المخزون</TableCell>
                       <TableCell align="right">الحالة</TableCell>
@@ -164,10 +168,16 @@ const Products = () => {
                     {products &&
                       filteredProducts.map((row) => (
                         <TableRow key={row._id}>
-                          <TableCell component="th" scope="row" align="right">
+                          {/*  <TableCell component="th" scope="row" align="right">
                             {row._id}
-                          </TableCell>
+                          </TableCell> */}
                           <TableCell align="right">{row.name}</TableCell>
+                          <TableCell align="right">
+                            <VendorChatInfo vendorId={row.idVendor} />
+                          </TableCell>
+                          <TableCell align="right">
+                            <VendorLocation vendorId={row.idVendor} />
+                          </TableCell>
                           <TableCell align="right">{row.price}</TableCell>
                           <TableCell align="right">{row.totalRating}</TableCell>
                           <TableCell align="right">

@@ -27,6 +27,16 @@ export const getRequestVendors = createAsyncThunk(
   }
 );
 
+export const fetchSingleVendor = createAsyncThunk(
+  "users/fetchSingleVendor",
+  async (id) => {
+    const res = await fetch(`${API_URL}/admin/vendor/${id}`);
+    const data = await res.json();
+    console.log(data);
+    return data;
+  }
+);
+
 export const getEditVendors = createAsyncThunk(
   "users/getEditVendors",
   async (id) => {
@@ -61,6 +71,7 @@ const vendorsSlice = createSlice({
     vendors: [],
     requetedVendors: [],
     editedVendors: [],
+    singleVendor: [],
     status: "",
     error: null,
   },
@@ -109,6 +120,20 @@ const vendorsSlice = createSlice({
       .addCase(delVendor.rejected, (state) => {
         state.status = "failed";
         state.error = "failed";
+      })
+
+      .addCase(fetchSingleVendor.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchSingleVendor.fulfilled, (state, action) => {
+        state.singleVendor = action.payload;
+        // Store vendor data using vendorId as the key
+        const vendor = action.payload.result;
+        state[vendor && vendor._id] = vendor;
+        state.status = "succeded";
+      })
+      .addCase(fetchSingleVendor.rejected, (state, action) => {
+        state.status = "failed";
       });
   },
 });
@@ -116,5 +141,7 @@ const vendorsSlice = createSlice({
 export const getAllVendors = (state) => state.vendors.vendors;
 export const getAllRequestedVendors = (state) => state.vendors.requetedVendors;
 export const getAllEditedVendors = (state) => state.vendors.editedVendors;
+export const selectVendorById = (state, vendorId) => state.vendors[vendorId];
+export const getSingleVendor = (state) => state.vendors.singleVendor;
 
 export default vendorsSlice.reducer;

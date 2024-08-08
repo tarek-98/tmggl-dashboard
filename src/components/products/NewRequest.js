@@ -25,6 +25,8 @@ import { MdOutlineSlideshow } from "react-icons/md";
 import { Col, Row } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
+import VendorChatInfo from "./VendorChatInfo";
+import VendorLocation from "./VendorLocation";
 
 function NewRequest() {
   const dispatch = useDispatch();
@@ -42,8 +44,6 @@ function NewRequest() {
 
   useEffect(() => {
     dispatch(getRequestProducts());
-    console.log(admin);
-    console.log(products);
   }, []);
 
   /*filter */
@@ -72,12 +72,13 @@ function NewRequest() {
     document.title = "طلبات اضافة منتج";
   }, []);
 
-  const vendorEmail = "tsalah240@gmail.com";
   const newStatus = "Accepted";
 
-  function acceptedProduct(productId) {
+  function acceptedProduct(productId, vendorEmail) {
     dispatch(updateStatus({ vendorEmail, productId, newStatus }));
-    dispatch(getRequestProducts());
+    setTimeout(() => {
+      dispatch(getRequestProducts());
+    }, 1000);
     console.log({ vendorEmail, productId, newStatus });
   }
 
@@ -166,9 +167,12 @@ function NewRequest() {
                 <Table aria-label="responsive table">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="right">ID</TableCell>
+                      {/*  <TableCell align="right">ID</TableCell> */}
                       <TableCell align="right">اسم المنتج</TableCell>
+                      <TableCell align="right">اسم التاجر</TableCell>
+                      <TableCell align="right">مقر التاجر</TableCell>
                       <TableCell align="right">السعر</TableCell>
+                      <TableCell align="right">المخزون</TableCell>
                       <TableCell align="right">الحالة</TableCell>
                       <TableCell align="right">مشاهدة</TableCell>
                       <TableCell align="right">خيارات</TableCell>
@@ -178,11 +182,18 @@ function NewRequest() {
                     {products &&
                       filteredProducts.map((row) => (
                         <TableRow key={row._id}>
-                          <TableCell component="th" scope="row" align="right">
+                          {/*  <TableCell component="th" scope="row" align="right">
                             {row._id}
-                          </TableCell>
+                          </TableCell> */}
                           <TableCell align="right">{row.name}</TableCell>
+                          <TableCell align="right">
+                            <VendorChatInfo vendorId={row.idVendor} />
+                          </TableCell>
+                          <TableCell align="right">
+                            <VendorLocation vendorId={row.idVendor} />
+                          </TableCell>
                           <TableCell align="right">{row.price}</TableCell>
+                          <TableCell align="right">{row.totalRating}</TableCell>
                           <TableCell align="right">{row.status}</TableCell>
                           <TableCell
                             align="right"
@@ -205,7 +216,9 @@ function NewRequest() {
                           <TableCell align="right" className="">
                             <span
                               className="ms-3 add-btn"
-                              onClick={() => acceptedProduct(row._id)}
+                              onClick={() =>
+                                acceptedProduct(row._id, row.vendorEmail)
+                              }
                             >
                               موافقة
                             </span>
